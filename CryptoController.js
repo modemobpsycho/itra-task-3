@@ -8,9 +8,6 @@ export default class CryptoController {
 	generateBytes(size) {
 		return crypto.randomBytes(size)
 	}
-	constructor() {
-		this.key = crypto.randomBytes(32)
-	}
 
 	encrypt(text) {
 		const cipher = crypto.createCipheriv(
