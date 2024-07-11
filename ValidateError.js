@@ -4,9 +4,9 @@ export default class ValidateError extends Error {
 		this.name = 'ValidateError'
 	}
 
-	errorHandler(err) {
-		console.log(chalk.red(err.message))
-		process.exit(1)
+	static errorHandler(error) {
+		console.error(error.message);
+		process.exitCode = 1;
 	}
 
 	validateArguments(moves) {

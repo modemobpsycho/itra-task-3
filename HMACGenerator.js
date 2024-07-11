@@ -3,10 +3,10 @@ export default class HMACGenerator {
 		this.cryptoController = cryptoController
 	}
 
-	generateHMAC(algorithm, key) {
-		const hmac = this.cryptoController.generateHMAC('sha256', key)
-		hmac.update(algorithm)
-		return hmac.digest('hex')
+	generateHMAC(algorithm, hmacKey) {
+		const hmacHash = this.cryptoController.generateHMAC('sha256', hmacKey)
+		hmacHash.update(algorithm)
+		return hmacHash.digest('hex')
 	}
 
 	generateKey() {
