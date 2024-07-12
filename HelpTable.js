@@ -1,17 +1,13 @@
 import chalk from 'chalk'
 export default class HelpTable {
 	static generateHelpTable(moves) {
-		const helpTable = []
-
-		for (let i = 0; i < moves.length; i += 1) {
+		return Array.from({ length: moves.length }, (_, i) => {
 			const row = [moves[i]]
-			for (let j = 0; j < moves.length; j += 1) {
+			for (let j = 0; j < moves.length; j++) {
 				row.push(this.getResultBetween(i, j, moves.length))
 			}
-			helpTable.push(row)
-		}
-
-		return helpTable
+			return row
+		})
 	}
 
 	static getResultBetween(move1, move2, length) {
@@ -36,13 +32,15 @@ export default class HelpTable {
 		console.log(chalk.greenBright('Results from moves: '))
 		this.displayTableLines(maxLength)
 		console.log(
-			`| ${
-				chalk.bold.blueBright(' PC ') + '\\' + chalk.bold.greenBright(' User ')
-			}  | ${moves.map(move => chalk.greenBright(move.padEnd(9))).join(' | ')}|`
+			`| ${chalk.bold.blueBright(' PC ')}\\${chalk.bold.greenBright(
+				' User '
+			)}  | ${moves
+				.map(move => chalk.greenBright(move.padEnd(9)))
+				.join(' | ')}|`
 		)
 		this.displayTableLines(maxLength)
 
-		for (let i = 0; i < helpTable.length; i += 1) {
+		for (let i = 0; i < helpTable.length; i++) {
 			const row = helpTable[i]
 			console.log(
 				`| ${chalk.blueBright(row[0].padEnd(13))}| ${row
@@ -50,6 +48,7 @@ export default class HelpTable {
 					.map(cell => cell.padEnd(9))
 					.join(' | ')}|`
 			)
+
 			this.displayTableLines(maxLength)
 		}
 	}
