@@ -4,12 +4,29 @@ export default class HMACGenerator {
 	}
 
 	generateHMAC(algorithm, hmacKey) {
-		const hmacHash = this.cryptoController.generateHMAC('sha256', hmacKey)
-		hmacHash.update(algorithm)
-		return hmacHash.digest('hex')
+		if (typeof algorithm !== 'string' || algorithm.length === 0) {
+			throw new Error('Invalid algorithm. Expecting a non-empty string.')
+		}
+
+		if (typeof hmacKey !== 'string' || hmacKey.length === 0) {
+			throw new Error('Invalid hmacKey. Expecting a non-empty string.')
+		}
+
+		try {
+			const hmacHash = this.cryptoController.generateHMAC('sha256', hmacKey)
+			hmacHash.update(algorithm)
+			return hmacHash.digest('hex')
+		} catch (error) {
+			throw new Error('Error generating HMAC: ' + error.message)
+		}
 	}
 
 	generateKey() {
-		return this.cryptoController.generateBytes(32).toString('hex')
+		try {
+			const key = this.cryptoController.generateBytes(32).toString('hex')
+			return key
+		} catch (error) {
+			throw new Error('Error generating key: ' + error.message)
+		}
 	}
 }
