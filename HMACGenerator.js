@@ -1,3 +1,4 @@
+import { KEY_LENGTH } from './constants.js'
 export default class HMACGenerator {
 	constructor(cryptoController) {
 		this.cryptoController = cryptoController
@@ -23,7 +24,9 @@ export default class HMACGenerator {
 
 	generateKey() {
 		try {
-			const key = this.cryptoController.generateBytes(32).toString('hex')
+			const key = this.cryptoController
+				.generateBytes(KEY_LENGTH)
+				.toString('hex')
 			return key
 		} catch (error) {
 			throw new Error('Error generating key: ' + error.message)
