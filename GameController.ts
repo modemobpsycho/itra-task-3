@@ -1,10 +1,13 @@
 import chalk from 'chalk'
-import readline from 'node:readline'
-
-import HelpTable from './HelpTable.js'
+import readline from 'readline'
+import HelpTable from './HelpTable'
+import RpsInterface from './types/rps.interface'
 
 export default class GameController {
-	constructor(moves, game) {
+	moves: string[]
+	game: RpsInterface
+
+	constructor(moves: string[], game: RpsInterface) {
 		this.moves = moves
 		this.game = game
 	}
@@ -54,7 +57,7 @@ export default class GameController {
 		console.log(chalk.whiteBright('0.') + chalk.redBright(' Exit'))
 	}
 
-	showIntro(hmac) {
+	showIntro(hmac: string) {
 		console.log(chalk.greenBright('Welcome to the game!'))
 		console.log(chalk.greenBright('HMAC: ') + chalk.yellowBright(hmac))
 	}
@@ -69,7 +72,7 @@ export default class GameController {
 			output: process.stdout,
 		})
 
-		return new Promise(resolve => {
+		return new Promise<string>(resolve => {
 			input.question('Enter your move: ', userInput => {
 				input.close()
 				resolve(userInput)

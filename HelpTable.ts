@@ -1,8 +1,9 @@
 import chalk from 'chalk'
+
 export default class HelpTable {
-	static generateHelpTable(moves) {
+	static generateHelpTable(moves: string[]): string[][] {
 		return Array.from({ length: moves.length }, (_, i) => {
-			const row = [moves[i]]
+			const row: string[] = [moves[i]]
 			for (let j = 0; j < moves.length; j++) {
 				row.push(this.getResultBetween(i, j, moves.length))
 			}
@@ -10,7 +11,11 @@ export default class HelpTable {
 		})
 	}
 
-	static getResultBetween(move1, move2, length) {
+	static getResultBetween(
+		move1: number,
+		move2: number,
+		length: number
+	): string {
 		const diff = (move1 - move2 + length) % length
 		if (diff === 0) {
 			return 'DRAW'
@@ -21,11 +26,12 @@ export default class HelpTable {
 		}
 	}
 
-	static displayTableLines(maxLength) {
+	static displayTableLines(maxLength: number) {
 		const line = chalk.whiteBright('-'.padEnd(maxLength, '-'))
 		console.log(line)
 	}
-	static showHelpTable(moves) {
+
+	static showHelpTable(moves: string[]) {
 		const helpTable = this.generateHelpTable(moves)
 		const maxLength = 15 + moves.length * 12
 
