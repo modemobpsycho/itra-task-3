@@ -1,10 +1,15 @@
 import { KEY_LENGTH } from './constants.js'
+import CryptoInterface from './types/crypto.interface.js'
+import { createHmac } from 'crypto'
+
 export default class HMACGenerator {
-	constructor(cryptoController) {
+	cryptoController: CryptoInterface
+
+	constructor(cryptoController: CryptoInterface) {
 		this.cryptoController = cryptoController
 	}
 
-	generateHMAC(algorithm, hmacKey) {
+	generateHMAC(algorithm: string, hmacKey: string): string {
 		if (typeof algorithm !== 'string' || algorithm.length === 0) {
 			throw new Error('Invalid algorithm. Expecting a non-empty string.')
 		}
@@ -14,21 +19,21 @@ export default class HMACGenerator {
 		}
 
 		try {
-			const hmacHash = this.cryptoController.generateHMAC('sha256', hmacKey)
+			const hmacHash = createHmac('sha256', hmacKey)
 			hmacHash.update(algorithm)
 			return hmacHash.digest('hex')
-		} catch (error) {
+		} catch (error: any) {
 			throw new Error('Error generating HMAC: ' + error.message)
 		}
 	}
 
-	generateKey() {
+	generateKey(): string {
 		try {
 			const key = this.cryptoController
 				.generateBytes(KEY_LENGTH)
 				.toString('hex')
 			return key
-		} catch (error) {
+		} catch (error: any) {
 			throw new Error('Error generating key: ' + error.message)
 		}
 	}

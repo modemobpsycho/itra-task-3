@@ -1,10 +1,10 @@
 import chalk from 'chalk'
 
-import CryptoController from './CryptoController.js'
-import GameController from './GameController.js'
-import RpsMain from './RpsMain.js'
-import GameRules from './GameRules.js'
-import HMACGenerator from './HmacGenerator.js'
+import CryptoController from './CryptoController'
+import GameController from './GameController'
+import RpsMain from './RpsMain'
+import GameRules from './GameRules'
+import HMACGenerator from './HMACGenerator'
 
 async function main() {
 	const moves = process.argv.length > 2 ? process.argv.slice(2) : []
@@ -47,7 +47,7 @@ async function main() {
 		const gameController = new GameController(moves, rpsGame)
 
 		await gameController.start()
-	} catch (err) {
+	} catch (err: any) {
 		console.error(chalk.redBright('Error: ' + err.message))
 		process.exit(1)
 	}
